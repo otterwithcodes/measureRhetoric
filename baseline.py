@@ -21,7 +21,6 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 
 
 
-
 def train_model(classifier, feature_vector_train, label, feature_vector_valid, is_neural_net=False):
     
     classifier.fit(feature_vector_train, label)
@@ -69,15 +68,16 @@ xtrain_tfidf_ngram = tfidf_vect_ngram.transform(train_x)
 xvalid_tfidf_ngram = tfidf_vect_ngram.transform(valid_x)
 
 
-
+#特征为词语的IT-IDF的NaiveBayes分类器
 accuracy = train_model(naive_bayes.MultinomialNB(), xtrain_tfidf, train_y, xvalid_tfidf)
 print("NaiveBayes, WordLevel TF-IDF: ", accuracy)
 
-
+#特征为N-Gram的IT-IDF的NaiveBayes分类器
 accuracy = train_model(naive_bayes.MultinomialNB(), xtrain_tfidf_ngram, train_y, xvalid_tfidf_ngram)
 print("NaiveBayes, N-Gram Vectors: ", accuracy)
 
 
+#特征为N-Gram的IT-IDF的SVM分类器
 accuracy = train_model(svm.SVC(), xtrain_tfidf_ngram, train_y, xvalid_tfidf_ngram)
 print("SVM, N-Gram Vectors: ", accuracy)
 
@@ -92,37 +92,6 @@ accuracy = train_model(linear_model.LogisticRegression(), xtrain_tfidf_ngram, tr
 print("LogisticRegression, N-Gram Vectors: ", accuracy)
 
 
-
-
-"""
-
-tf = CountVectorizer()
-X = tf.fit_transform(train_x)
-
-m = MultinomialNB(fit_prior=True)
-m.fit(X, train_y)
-
-
-X_test = tf.transform(valid_x)
-
-
-"""
-
-
-
-    
-
-
-
-
-"""
-
-#创建一个dataframe，列名为text和label
-trainDF = pandas.DataFrame()
-trainDF['text'] = texts
-trainDF['label'] = labels
-
-"""
 
 
 
